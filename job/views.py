@@ -7,6 +7,7 @@ from .models import CategoryJob, Job, City, Region
 from .serializer import CategoryJobSerializer, JobSerializer, CitySerializer, RegionSerializer
 from django.shortcuts import get_object_or_404
 
+
 @api_view(['GET'])
 def category_job_list(request):
     category_jobs = CategoryJob.objects.all()
@@ -88,13 +89,14 @@ def get_filtered_workers(order):
     # Umumiy job_category va region bo‘yicha workerlarni olamiz
     workers = AbstractUser.objects.filter(
         role='worker',
-        # status='idle',
+        status='idle',
         job_category=order.job_category,
         region=order.region,
-        city=order.city
+        city=order.city,
+        is_worker_active=True
     )
 
-    # ✅ Agar orderda aniq job-lar belgilangan bo‘lsa, ular bo‘yicha ham filterlaymiz
+    #  Agar orderda aniq job-lar belgilangan bo‘lsa, ular bo‘yicha ham filterlaymiz
     if order.job_id.exists():
         workers = workers.filter(job_id__in=order.job_id.all()).distinct()
 

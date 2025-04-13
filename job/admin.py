@@ -22,7 +22,7 @@ class JobAdmin(admin.ModelAdmin):
 class CityAdmin(admin.ModelAdmin):
     list_display = ('id', 'title',)
     search_fields = ('title',)
-    fields = ['title' 'regions']
+    fields = ['title',]
 
 
 @admin.register(Region)
